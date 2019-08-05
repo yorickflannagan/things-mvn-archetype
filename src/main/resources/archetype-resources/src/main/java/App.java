@@ -1,12 +1,29 @@
 package $package;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Properties;
+import java.util.logging.Logger;
+
 import org.crypthing.things.appservice.*;
+import org.crypthing.things.config.ConfigException;
+import org.crypthing.things.snmp.ProcessingEvent;
+import org.crypthing.things.snmp.ProcessingEvent.ProcessingEventType;
 
 /**
- * Hello world!
+ * Hello world sample!
  *
  */
 public class App extends Sandbox
 {
+    private static Logger log = Logger.getLogger(App.class.getName());
+
+
+    @Override
+    public void startup(Properties props) throws ConfigException {
+        /* Inicialização da thread. Recebe as propriedades específicas do projeto */
+        fire(new ProcessingEvent(ProcessingEventType.info, "Thread started."));
+        log.info(props.getProperty("hello"));
+    }
 
     @Override
     protected  boolean execute() throws IOException, SQLException
@@ -15,7 +32,7 @@ public class App extends Sandbox
         {
             try {
                 doSomething();
-                sucess();
+                success();
             } catch (Exception e) {
                 failure();
             }
@@ -25,13 +42,13 @@ public class App extends Sandbox
     } 
 
     private void doSomething() throws Exception {
-        System.out.println( "Hello World!" );
+        log.fine("Hello World!");
     }
 
-    long quant_work = 10
+    long quant_work = 10;
     private boolean hasWork()
     {
-        /** TODO:Criar uma condição pela qual ainda tem trabalho. */
+        /* TODO:Criar uma condição. */
         return quant_work-->0;
     }
     

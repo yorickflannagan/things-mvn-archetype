@@ -9,8 +9,8 @@
             <path>things.jar</path>
         </classpath>
     </jvm>
-    <jndi implementation=""/>
-    <worker implementation="" >
+    <jndi implementation="org.crypthing.things.jndi.InitialContextFactory"/>
+    <worker implementation="${package}.App" >
         <threads>10</threads>
         <restartable>true</restartable>
         <goal>100</goal>

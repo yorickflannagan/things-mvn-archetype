@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE  config>
+<config>
+    <jvm>
+        <name>Sample</name>
+        <heartbeat>1000</heartbeat>
+        <jmx host="127.0.0.1" port="3099" />
+        <classpath>
+            <path>things.jar</path>
+        </classpath>
+    </jvm>
+    <jndi implementation=""/>
+    <worker implementation="" >
+        <threads>10</threads>
+        <restartable>true</restartable>
+        <goal>100</goal>
+        <ramp>20</ramp>
+    </worker>
+</config>

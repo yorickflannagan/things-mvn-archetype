@@ -6,7 +6,7 @@
         <heartbeat>1000</heartbeat>
         <jmx host="127.0.0.1" port="3099" />
         <classpath>
-            <path>things.jar</path>
+            <path>lib/${project.build.finalName}.jar</path>
         </classpath>
     </jvm>
     <jndi implementation="org.crypthing.things.jndi.InitialContextFactory"/>

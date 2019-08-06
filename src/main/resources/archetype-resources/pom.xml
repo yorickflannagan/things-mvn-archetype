@@ -7,7 +7,9 @@
   <groupId>${groupId}</groupId>
   <artifactId>${artifactId}</artifactId>
   <version>${git.commit.id.describe}</version>
-
+  <organization>
+    <name>Yakoana</name>
+  </organization>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
@@ -60,6 +62,25 @@
                     <version>3.8.1</version>
                 </plugin>
                 <plugin>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>3.1.1</version>
+                    <configuration>
+                      <descriptors>
+                        <descriptor>src/main/assembly/app.xml</descriptor>
+                      </descriptors>
+                      <attach>false</attach>
+                    </configuration>
+                    <executions>
+                      <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                          <goal>single</goal>
+                        </goals>
+                      </execution>
+                    </executions>
+                </plugin>                
+                <plugin>
                     <!-- this will change the version for the current build, so the artifacts will be installed and deployed with the corret version -->
                     <groupId>org.codehaus.gmaven</groupId>
                     <artifactId>groovy-maven-plugin</artifactId>
@@ -79,18 +100,17 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.1.1</version>
+                    <version>3.1.2</version>
                     <configuration>
                         <archive>
                             <manifest>
+                                <!-- <addDefaultEntries>true</addDefaultEntries> -->
+                                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                                 <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                <addBuildEnvironmentEntries>true</addBuildEnvironmentEntries>
+                                <addClasspath>true</addClasspath>
                             </manifest>
                             <manifestEntries>
-                                <Created-By>Maven Archiver</Created-By>
-                                <Build-Jdk-Spec>${java.specification.version}</Build-Jdk-Spec>
-                                <Build-Tool>${maven.build.version}</Build-Tool>
-                                <Build-Jdk>${java.version} (${java.vendor})</Build-Jdk>
-                                <Build-Os>${os.name} ${os.version}; ${os.arch}</Build-Os>
                                 <Version>${project.version} ${maven.build.timestamp}</Version>
                             </manifestEntries>
                         </archive>
@@ -107,11 +127,25 @@
           <artifactId>maven-resources-plugin</artifactId>
           <version>3.0.2</version>
         </plugin>
-        <plugin>
+        <!-- <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-dependency-plugin</artifactId>
           <version>3.1.1</version>
           <executions>
+            <execution>
+                <id>build-classpath</id>
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>build-classpath</goal>
+                </goals>
+                <configuration>
+                  <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                  <includeScope>runtime</includeScope>
+                  <attach>false</attach>
+                  <localRepoProperty>lib</localRepoProperty>
+                  <outputProperty>target.output.classpath</outputProperty>
+                </configuration>
+            </execution>
             <execution>
               <id>copy-dependencies</id>
               <phase>package</phase>
@@ -119,7 +153,7 @@
                 <goal>copy-dependencies</goal>
               </goals>
               <configuration>
-                <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                <outputDirectory>${project.build.directory}/dist/lib</outputDirectory>
                 <overWriteReleases>false</overWriteReleases>
                 <overWriteSnapshots>false</overWriteSnapshots>
                 <overWriteIfNewer>true</overWriteIfNewer>
@@ -127,7 +161,7 @@
               </configuration>
             </execution>
           </executions>
-        </plugin>
+        </plugin> -->
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.22.1</version>

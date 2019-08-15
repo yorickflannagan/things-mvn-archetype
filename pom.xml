@@ -1,12 +1,14 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
- 
+
   <groupId>org.crypthing</groupId>
   <artifactId>things-app-archetype</artifactId>
-  <version>1.0</version>
+  <version>${git.commit.id.describe}</version>
   <packaging>maven-archetype</packaging>
- 
+  <name>${project.groupId}:${project.artifactId}</name>
+  <description>Things Server is a multi-thread, monitorable and elastic application server for running daemon lambda services in java. That archetype facilitates to develop such aplications.</description>
+  <url>https://bitbucket.org/yakoana/things-mvn-archetype/wiki/Home</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
@@ -21,7 +23,7 @@
         <version>3.0.1</version>
       </extension>
     </extensions>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+    <pluginManagement>      <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
@@ -42,6 +44,75 @@
         <plugin>
           <artifactId>maven-deploy-plugin</artifactId>
           <version>2.8.2</version>
+        </plugin>
+        <plugin>
+          <!--details: 
+              https://github.com/git-commit-id/maven-git-commit-id-plugin/blob/master/docs/using-the-plugin.md
+          -->
+          <groupId>pl.project13.maven</groupId>
+          <artifactId>git-commit-id-plugin</artifactId>
+          <version>2.2.4</version>
+          <executions>
+            <execution>
+              <id>get-the-git-infos</id>
+              <goals>
+                <goal>revision</goal>
+              </goals>
+              <phase>validate</phase>
+            </execution>
+          </executions>
+          <configuration>
+            <skipPoms>false</skipPoms>
+            <verbose>false</verbose>
+            <gitDescribe>
+              <tags>true</tags>
+            </gitDescribe>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.8.1</version>
+          <configuration>
+            <verbose>true</verbose>
+            <fork>true</fork>
+            <executable>${jdk.home}/bin/javac</executable>
+            <compilerVersion>1.7</compilerVersion>
+          </configuration>
+        </plugin>
+        <plugin>
+          <!-- this will change the version for the current build, so the artifacts will be installed and deployed with the corret version -->
+          <groupId>org.codehaus.gmaven</groupId>
+          <artifactId>groovy-maven-plugin</artifactId>
+          <version>2.0</version>
+          <executions>
+            <execution>
+              <phase>validate</phase>
+              <goals>
+                <goal>execute</goal>
+              </goals>
+              <configuration>
+                <source>project.version='${git.commit.id.describe}';project.artifact.version='${git.commit.id.describe}';</source>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>3.1.0</version>
+          <configuration>
+            <outputDirectory>${project.basedir}/docs/apidocs</outputDirectory>
+            <excludePackageNames>org.crypthing.security.cms:org.crypthing.security.cert:org.crypthing.security.provider:org.crypthing.security.x509:org.crypthing.util</excludePackageNames>
+            <bottom>Copyleft &#169; 2019 by The Crypthing Initiative. All rights reversed.</bottom>
+            <charset>utf8</charset>
+            <doctitle>${project.name} ${project.version}</doctitle>
+            <docencoding>UTF-8</docencoding>
+            <encoding>UTF-8</encoding>
+            <locale>en_US</locale>
+            <show>public</show>
+            <windowtitle>${project.name} ${project.version}</windowtitle>
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>

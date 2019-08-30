@@ -9,6 +9,29 @@
   <name>${project.groupId}:${project.artifactId}</name>
   <description>Things Server is a multi-thread, monitorable and elastic application server for running daemon lambda services in java. That archetype facilitates to develop such aplications.</description>
   <url>https://bitbucket.org/yakoana/things-mvn-archetype/wiki/Home</url>
+
+  <licenses>
+    <license>
+      <name>GNU Lesser General Public License</name>
+      <url>https://www.gnu.org/licenses/lgpl.txt</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Diego von Sohsten</name>
+      <email>diego.sohsten@gmail.com</email>
+      <organization>Yakoana</organization>
+      <organizationUrl>http://www.yakoana.com.br</organizationUrl>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:git://bitbucket.org/yakoana/things-mvn-archetype.git</connection>
+    <developerConnection>scm:git:ssh://bitbucket.org:yakoana/things-mvn-archetype.git</developerConnection>
+    <url>https://bitbucket.org/yakoana/things-mvn-archetype/src</url>
+  </scm>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
@@ -31,6 +54,14 @@
         <plugin>
           <artifactId>maven-archetype-plugin</artifactId>
           <version>3.0.1</version>
+          <executions>
+            <execution>
+              <id>integration-test</id>
+              <configuration>
+                
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>

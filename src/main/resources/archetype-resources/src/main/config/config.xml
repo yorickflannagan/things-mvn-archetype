@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE  config>
+<!-- TODO: Must supply your own values -->
 <config>
-    <jvm>
-        <name>Sample</name>
-        <heartbeat>1000</heartbeat>
-        <jmx host="127.0.0.1" port="3099" />
-        <classpath>
-            <path>lib/${project.build.finalName}.jar</path>
-        </classpath>
-    </jvm>
-    <jndi implementation="org.crypthing.things.jndi.InitialContextFactory"/>
-    <worker implementation="${package}.App" >
-        <threads>10</threads>
-        <restartable>true</restartable>
-        <goal>100</goal>
-        <ramp>20</ramp>
-    </worker>
+	<jvm>
+		<name>Sample</name>
+		<heartbeat>1000</heartbeat>
+		<jmx host="127.0.0.1" port="8061" />
+		<classpath>
+			<path>lib/${project.build.finalName}.jar</path>
+		</classpath>
+	</jvm>
+	<jndi implementation="org.crypthing.things.appservice.ServicesFactory"/>
+	<worker implementation="${package}.App" >
+		<threads>10</threads>
+		<restartable>true</restartable>
+		<goal>100</goal>
+		<ramp>20</ramp>
+	</worker>
+	<snmp>
+		<property name="org.crypthing.things.SNMPTrap" value="org.crypthing.things.snmp.SNMPBridge" />
+		<property name="org.crypthing.things.batch.udpAddress" value="127.0.0.1/8163" />
+		<property name="org.crypthing.things.batch.rootOID" value="57.171" />
+	</snmp>
 </config>

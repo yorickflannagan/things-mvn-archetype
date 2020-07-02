@@ -6,7 +6,7 @@
 
 	<groupId>org.crypthing</groupId>
 	<artifactId>things-app-archetype</artifactId>
-	<version>1.0.0</version>
+	<version>1.2.1</version>
 	<packaging>maven-archetype</packaging>
 	<name>things-app-archetype</name>
 	<description>

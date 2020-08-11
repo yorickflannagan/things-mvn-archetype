@@ -3,7 +3,7 @@
 <!-- TODO: Must supply your own values -->
 <config>
 	<jvm>
-		<name>Sample</name>
+		<name>${artifactId}</name>
 		<heartbeat>1000</heartbeat>
 		<jmx host="127.0.0.1" port="8061" />
 		<classpath>
@@ -20,10 +20,11 @@
 		<sleep>1000</sleep>
 		<goal>100</goal>
 		<ramp>20</ramp>
+		<sleep>1000</sleep>
 	</worker>
 	<snmp>
 		<property name="org.crypthing.things.SNMPTrap" value="org.crypthing.things.snmp.SNMPBridge" />
 		<property name="org.crypthing.things.batch.udpAddress" value="127.0.0.1/8163" />
-		<property name="org.crypthing.things.batch.rootOID" value="0.51.171" />
+		<property name="org.crypthing.things.batch.rootOID" value="1.51.171" />
 	</snmp>
 </config>

@@ -6,8 +6,12 @@ import java.util.logging.Logger;
 
 import org.crypthing.things.appservice.*;
 import org.crypthing.things.config.ConfigException;
+import org.crypthing.things.snmp.LifecycleEvent;
+import org.crypthing.things.snmp.LifecycleEvent.LifecycleEventType;
 import org.crypthing.things.snmp.ProcessingEvent;
 import org.crypthing.things.snmp.ProcessingEvent.ProcessingEventType;
+import org.crypthing.things.snmp.SignalBean;
+
 
 /**
  * Hello world sample!
@@ -23,14 +27,14 @@ public class App extends Sandbox
 		// This method is called when application starts
 		// The argument receives configured parameters (see section sandbox)
 		// TODO: overrides only if required 
-		fire(new ProcessingEvent(ProcessingEventType.info, "Thread started."));
+		fire(new LifecycleEvent(LifecycleEventType.start, (new SignalBean(App.class.getName(), "Application thread started")).encode()));
 	}
 	@Override
 	public void release()
 	{
 		// This method is called when the application finalizes
 		// TODO: overrides only if required
-		fire(new ProcessingEvent(ProcessingEventType.info, "Thread ended."));
+		fire(new LifecycleEvent(LifecycleEventType.stop, (new SignalBean(App.class.getName(), "Application thread ended")).encode()));
 	}
 
 	@Override
@@ -50,6 +54,7 @@ public class App extends Sandbox
 		// If you want to stop execution, you must throw an exception.
 		// Throw IOException or SQLException only for transient errors. So, the thread will only sleep.
 		// If any other kind of exception is thrown, the thread will die and application stops.
+		fire(new ProcessingEvent(ProcessingEventType.info, (new SignalBean(App.class.getName(), "Hello, World!")).encode()));
 		log.fine("Hello World!");
 		return true;
 	}

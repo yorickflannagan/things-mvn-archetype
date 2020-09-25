@@ -20,7 +20,6 @@
 		<sleep>1000</sleep>
 		<goal>100</goal>
 		<ramp>20</ramp>
-		<sleep>1000</sleep>
 	</worker>
 	<snmp>
 		<property name="org.crypthing.things.SNMPTrap" value="org.crypthing.things.snmp.SNMPBridge" />
